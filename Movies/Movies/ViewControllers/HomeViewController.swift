@@ -9,6 +9,32 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupView()
+    }
+    
+    //MARK: Setup View
+    private func setupView() {
+        view.backgroundColor = UIColor(named: "BackgroundColor")
+        view.addSubview(stackView)
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -64),
+            
+            welcomeButton.heightAnchor.constraint(equalToConstant: 64),
+            welcomeButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 64),
+            welcomeButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -64),
+        ])
+    }
+    
+    //MARK: Components
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "Logo"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -46,6 +72,10 @@ class HomeViewController: UIViewController {
         return button
     }()
     
+    @objc private func buttonPressed() {
+        navigationController?.pushViewController(MoviesViewController(), animated: true)
+    }
+    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [logoImageView, coupleImageView, welcomeLabel, welcomeButton])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -54,53 +84,6 @@ class HomeViewController: UIViewController {
         stackView.alignment = .center
         return stackView
     }()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        view.backgroundColor = UIColor(named: "BackgroundColor")
-        addSubviews()
-        setupConstraints()
-    }
-    
-    @objc private func buttonPressed() {
-        navigationController?.pushViewController(MoviesViewController(), animated: true)
-    }
-    
-    private func addSubviews() {
-        view.addSubview(stackView)
-    }
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -64),
-            
-            welcomeButton.heightAnchor.constraint(equalToConstant: 64),
-            welcomeButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor, constant: 64),
-            welcomeButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: -64),
-            
-            /*logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32),
-            logoImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            
-            coupleImageView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 32),
-            coupleImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            welcomeLabel.topAnchor.constraint(equalTo: coupleImageView.bottomAnchor, constant: 32),
-            welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            welcomeButton.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 64),
-            welcomeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
-            welcomeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
-            welcomeButton.heightAnchor.constraint(equalToConstant: 64)*/
-        ])
-    }
-    
-    
 }
 
 

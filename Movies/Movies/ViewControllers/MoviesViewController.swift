@@ -12,7 +12,29 @@ class MoviesViewController: UIViewController {
     private var filteredMovies: [Movie] = []
     private var isFilterActive: Bool = false
     
-//MARK: Components
+    //MARK: Setup View
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupNavigationBar()
+        setupView()
+    }
+    
+    private func setupView() {
+        view.backgroundColor = UIColor(named: "BackgroundColor")
+        view.addSubview(tableView)
+        setupConstraints()
+    }
+
+    private func setupConstraints() {
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+        ])
+    }
+    
+    //MARK: Components
     private lazy var tableView: UITableView = {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
@@ -32,29 +54,7 @@ class MoviesViewController: UIViewController {
         return search
     }()
     
-//MARK: Setup View
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupNavigationBar()
-        setupView()
-    }
-    
-    private func setupConstraints() {
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-        ])
-    }
-    
-    private func setupView() {
-        view.backgroundColor = UIColor(named: "BackgroundColor")
-        view.addSubview(tableView)
-        setupConstraints()
-    }
-    
-//MARK: Navigation Bar
+    //MARK: Navigation Bar
     private func setupNavigationBar() {
         title = "Filmes Populares"
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -73,19 +73,16 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: MovieTableViewCell.identifier, for: indexPath) as? MovieTableViewCell else { return UITableViewCell()
         }
-        
         //cell.textLabel?.text = self.names[indexPath.row]
         //var configuration = cell.defaultContentConfiguration()
         //configuration.text = movies[indexPath.row].title
         //configuration.textProperties.color = .white
         cell.selectionStyle = .none
         let movie = isFilterActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
-
+        
         cell.loadMovieData(movie: movie)
         return cell
     }
-
-    
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -98,7 +95,6 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         120
     }
-    
 }
 
 extension MoviesViewController: UISearchBarDelegate {

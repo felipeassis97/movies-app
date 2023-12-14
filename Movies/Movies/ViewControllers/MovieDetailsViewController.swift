@@ -24,6 +24,7 @@ class MovieDetailsViewController: UIViewController {
         setupView()
     }
     
+    //MARK: Setup view
     private func setupView() {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         view.addSubview(titleLabel)
@@ -53,7 +54,7 @@ class MovieDetailsViewController: UIViewController {
         ])
     }
     
-    
+    //MARK: Components
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
