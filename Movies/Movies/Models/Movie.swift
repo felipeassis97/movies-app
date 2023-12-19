@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct Movie {
+struct Movie: Decodable  {
     let id: Int
     let title: String
     let image: String
@@ -18,7 +18,7 @@ struct Movie {
 }
 
 
-let movies: [Movie] = [
+/*let movies: [Movie] = [
     Movie(id: 1,
           title: "Inception",
           image: "Inception",
@@ -53,4 +53,4 @@ let movies: [Movie] = [
           synopsis: "The aging patriarch of an organized crime dynasty transfers control of his clandestine empire to his reluctant son.",
           rate: 9.2,
           releaseDate: "24/03/1972")
-]
+]*/

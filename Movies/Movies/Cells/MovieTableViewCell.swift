@@ -26,6 +26,7 @@ class MovieTableViewCell: UITableViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
         label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         return label
     } ()
     
@@ -48,7 +49,6 @@ class MovieTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -57,7 +57,7 @@ class MovieTableViewCell: UITableViewCell {
     }
     
     func loadMovieData(movie: Movie) {
-        movieImage.image = UIImage(named: movie.image)
+        movieImage.setImageFromURL(urlImage: movie.image)
         titleLabel.text = movie.title
         releaseDateLabel.text = "Lançamento: \(movie.releaseDate)"
     }
@@ -86,8 +86,12 @@ class MovieTableViewCell: UITableViewCell {
 
         ])
     }
-
 }
+
+//#Preview {
+//    MovieTableViewCell()
+//}
+
 
 
 

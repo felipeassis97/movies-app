@@ -71,7 +71,7 @@ class MovieDetailsViewController: UIViewController {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 20
         imageView.layer.masksToBounds = true
-        imageView.image = UIImage(named: movie.image)
+        imageView.setImageFromURL(urlImage: movie.image)
         return imageView
     }()
     

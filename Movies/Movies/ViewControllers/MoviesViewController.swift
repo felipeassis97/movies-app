@@ -10,7 +10,9 @@ import UIKit
 
 class MoviesViewController: UIViewController {
     private var filteredMovies: [Movie] = []
+    private var movies: [Movie] = []
     private var isFilterActive: Bool = false
+    private var networkService: NetworkService = NetworkService()
     
     //MARK: Setup View
     override func viewDidLoad() {
@@ -23,8 +25,9 @@ class MoviesViewController: UIViewController {
         view.backgroundColor = UIColor(named: "BackgroundColor")
         view.addSubview(tableView)
         setupConstraints()
+        fetchMovies()
     }
-
+    
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
@@ -32,6 +35,21 @@ class MoviesViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
         ])
+    }
+    
+    private func fetchMovies() {
+        networkService.getMovies { result in
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    self.movies = movies
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+        
     }
     
     //MARK: Components
@@ -109,4 +127,8 @@ extension MoviesViewController: UISearchBarDelegate {
         }
         tableView.reloadData()
     }
+}
+
+#Preview {
+    MoviesViewController()
 }
